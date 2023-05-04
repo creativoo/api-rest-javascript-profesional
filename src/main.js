@@ -9,7 +9,18 @@ const api = axios.create({
 });
 
 //Helpers
-function createMovies(movies, container) {
+
+const lazyLoader = new IntersectionObserver((entries) => {
+  entries.forEach ((entry) => {
+    if (entry.isIntersecting) {
+    const url = entry.target.getAttribute ('data-img');
+    entry.target.setAttribute('src', url);
+    }
+  });
+});
+
+
+function createMovies(movies, container, lazyLoad = false) {
   container.innerHTML = '';
 
   movies.forEach(movie => {
@@ -23,9 +34,22 @@ function createMovies(movies, container) {
     movieImg.classList.add('movie-img');
     movieImg.setAttribute('alt', movie.title);
     movieImg.setAttribute(
-      'src',
+      'data-img',
       'https://image.tmdb.org/t/p/w300' + movie.poster_path,
     );
+    
+    movieImg.addEventListener('error', () => {
+      movieImg.setAttribute(
+        'src',
+        'https://static.platzi.com/static/images/error/img404.png',
+      );
+    })
+
+    if (lazyLoad) {
+      lazyLoader.observe(movieImg);
+    }
+
+    lazyLoader.observe(movieImg);
     movieContainer.appendChild(movieImg);
     container.appendChild(movieContainer);
   });
@@ -41,6 +65,7 @@ function createCategories(categories, container) {
     const categoryTitle = document.createElement('h3');
     categoryTitle.classList.add('category-title');
     categoryTitle.setAttribute('id', 'id' + category.id);
+
     categoryTitle.addEventListener('click', ()=> {
       location.hash = `#category=${category.id}-${category.name}`;
     });
@@ -61,7 +86,7 @@ async function getTrendingMoviesPreview() {
   const { data } = await api('trending/movie/day');
   const movies = data.results;
 
-  createMovies(movies, trendingMoviesPreviewList );
+  createMovies(movies, trendingMoviesPreviewList, true );
 }
 
 async function getCategoriesPreview() {
@@ -79,7 +104,7 @@ async function getMoviesByCategory(id) {
   });
   const movies = data.results;
 
-  createMovies(movies, genericSection)
+  createMovies(movies, genericSection, true)
 }
 
 async function getMoviesBySearch(query) {
