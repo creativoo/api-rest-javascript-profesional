@@ -15,7 +15,6 @@ window.addEventListener('DOMContentLoaded', navigator, false);
 window.addEventListener('hashchange', navigator, false);
 
 function navigator() {
-  console.log({ location });
   
   if (location.hash.startsWith('#trends')) {
     trendsPage();
@@ -34,7 +33,6 @@ function navigator() {
 }
 
 function homePage() {
-  console.log('Home!!');
 
   headerSection.classList.remove('header-container--long');
   headerSection.style.background = '';
@@ -54,7 +52,6 @@ function homePage() {
 }
 
 function categoriesPage() {
-  console.log('categories!!');
 
   headerSection.classList.remove('header-container--long');
   headerSection.style.background = '';
@@ -78,7 +75,6 @@ function categoriesPage() {
 }
 
 function movieDetailsPage() {
-  console.log('Movie!!');
 
   headerSection.classList.add('header-container--long');
   // headerSection.style.background = '';
@@ -99,7 +95,6 @@ function movieDetailsPage() {
 }
 
 function searchPage() {
-  console.log('Search!!');
 
   headerSection.classList.remove('header-container--long');
   headerSection.style.background = '';
@@ -120,7 +115,6 @@ function searchPage() {
 }
 
 function trendsPage() {
-  console.log('TRENDS!!');
 
   headerSection.classList.remove('header-container--long');
   headerSection.style.background = '';
