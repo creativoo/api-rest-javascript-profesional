@@ -38,13 +38,14 @@ function createMovies(
     movieContainer.classList.add('movie-container');
     movieContainer.addEventListener('click', () => {
       location.hash ='#movie=' + movie.id;
-    })
+    });
 
     const movieImg = document.createElement('img');
     movieImg.classList.add('movie-img');
     movieImg.setAttribute('alt', movie.title);
     movieImg.setAttribute(
-      'data-img',
+      lazyLoad?
+      'data-img' : 'src',
       'https://image.tmdb.org/t/p/w300' + movie.poster_path,
     );
     
@@ -58,8 +59,6 @@ function createMovies(
     if (lazyLoad) {
       lazyLoader.observe(movieImg);
     }
-
-    lazyLoader.observe(movieImg);
     movieContainer.appendChild(movieImg);
     container.appendChild(movieContainer);
   });
@@ -75,12 +74,9 @@ function createCategories(categories, container) {
     const categoryTitle = document.createElement('h3');
     categoryTitle.classList.add('category-title');
     categoryTitle.setAttribute('id', 'id' + category.id);
-
     categoryTitle.addEventListener('click', ()=> {
       location.hash = `#category=${category.id}-${category.name}`;
     });
-
-
     const categoryTitleText = document.createTextNode(category.name);
 
     categoryTitle.appendChild(categoryTitleText);
@@ -96,7 +92,7 @@ async function getTrendingMoviesPreview() {
   const { data } = await api('trending/movie/day');
   const movies = data.results;
 
-  createMovies(movies, trendingMoviesPreviewList, true );
+  createMovies(movies, trendingMoviesPreviewList, true);
 }
 
 async function getCategoriesPreview() {
@@ -115,7 +111,7 @@ async function getMoviesByCategory(id) {
   const movies = data.results;
   maxPage = data.total_pages;
 
-  createMovies(movies, genericSection, true)
+  createMovies(movies, genericSection, {lazyLoad: true});
 }
 
 function getPaginatedMoviesByCategory(id) {
@@ -139,7 +135,7 @@ function getPaginatedMoviesByCategory(id) {
   });
 
   const movies = data.results;
-  maxPage = data.total_pages;
+  
 
     createMovies(
       movies,
@@ -155,17 +151,13 @@ async function getMoviesBySearch(query) {
   const { data } = await api('search/movie', {
     params: {
       query,
-      page,
     },
   });
   const movies = data.results;
   maxPage = data.total_pages;
   console.log(maxPage);
 
-  createMovies(movies, genericSection,
-    {lazyLoad:true,
-    clean: false},
-    )
+  createMovies(movies, genericSection)
 }
 
 function getPaginatedMoviesBySearch(query) {

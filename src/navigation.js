@@ -1,5 +1,5 @@
-let page = 1;
 let maxPage;
+let page = 1;
 let infiniteScroll;
 
 searchFormBtn.addEventListener('click', () => {
@@ -17,7 +17,7 @@ arrowBtn.addEventListener('click', () => {
 
 window.addEventListener('DOMContentLoaded', navigator, false);
 window.addEventListener('hashchange', navigator, false);
-window.addEventListener('scroll', infiniteScroll,{passive: false});
+window.addEventListener('scroll', infiniteScroll, false);
 
 
 function navigator() {
