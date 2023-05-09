@@ -89,19 +89,23 @@ button {
 
 
 /* Shared */
-.header-container, .trendingPreview-header, .categoriesPreview-container {
+.header-container,
+.trendingPreview-header,
+.categoriesPreview-container,
+.liked-header {
   padding: 0 24px;
 }
 
-.trendingPreview-container, .categoriesPreview-container, footer {
+.trendingPreview-container, .categoriesPreview-container, .liked-container, footer {
   margin-top: 48px;
 }
 
-.trendingPreview-header, .categoriesPreview-title {
+.trendingPreview-header, .categoriesPreview-title, .liked-header {
   margin-bottom: 24px;
 }
 
 .movie-container {
+  position: relative;
   cursor: pointer;
 }
 
@@ -126,7 +130,30 @@ button {
 
 .movie-img {
   border-radius: 8px;
-  min-height: 300px;
+  min-height: 175px;
+}
+
+.movie-btn {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  height: 29px;
+  width: 29px;
+  border-radius: 30px;
+  padding: 0;
+  margin: 0;
+}
+
+.movie-btn::before {
+  content: '🤍';
+  /* font-size: 13px; */
+}
+.movie-btn--liked {
+  background-color: var(--purple-light-2);
+  box-shadow: 0px 0px 10px 2px var(--purple-dark-1);
+}
+.movie-btn--liked::before {
+  content: '💜';
 }
 
 .categoriesPreview-list, .categories-list {
@@ -198,31 +225,33 @@ button {
 .header-searchForm input {
   height: 48px;
   width: 100%;
-  border-top-left-radius: 8px;
-  border-bottom-left-radius: 8px;
+  border-top-left-radius: 25px;
+  border-bottom-left-radius: 25px;
 }
 .header-searchForm button {
   width: 56px;
   height: 48px;
-  border-top-right-radius: 8px;
-  border-bottom-right-radius: 8px;
+  border-top-right-radius: 25px;
+  border-bottom-right-radius: 25px;
 }
 
 
 /* Trending */
-.trendingPreview-header {
+.trendingPreview-header,
+.liked-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
 .trendingPreview-btn {
-  border-radius: 8px;
+  border-radius: 25px;
   height: 32px;
   width: 72px;
 }
 
-.trendingPreview-movieList {
+.trendingPreview-movieList,
+.liked-movieList {
   overflow-x: scroll;
   overflow-y: hidden;
   white-space: nowrap;
@@ -231,12 +260,14 @@ button {
   padding-bottom: 16px;
 }
 
-.trendingPreview-movieList .movie-container {
+.trendingPreview-movieList .movie-container,
+.liked-movieList .movie-container {
   display: inline-block;
   margin-right: 8px;
 }
 
-.trendingPreview-movieList .movie-container .movie-img {
+.trendingPreview-movieList .movie-container .movie-img,
+.liked-movieList .movie-container .movie-img {
   height: 225px;
   min-height: 225px;
   max-height: 225px;
